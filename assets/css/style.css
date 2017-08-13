@@ -44,6 +44,7 @@ button {
 .row {
   margin: 0;
   margin-bottom: 5px;
+  width: 100%;
 }
 
 .gen-col {
@@ -64,7 +65,7 @@ button {
 }
 
 #money_box {
-  padding: 0 0 0 7.5px;
+  padding: 0 10px 0 0;
 }
 
 #money {
@@ -101,21 +102,25 @@ button {
   line-height: 30px;
 }
 
-#info_row {
+#info_row,
+#question_row {
+  margin: 0 5px 5px 5px; 
+  padding-right: 10px;
+}
+
+#info {
   background-color: lightgrey;
   border: solid grey 2px; 
   height: 30px;
-  line-height: 26px;
-  margin: 0 5px 5px 5px; 
+  line-height: 26px;  
 }
 
-#question_row {
+ #question {
   background-color: lightgrey;
   border: solid grey 2px; 
   height: 80px;
   line-height: 30px;
-  margin: 0 5px 5px 5px;  
-}
+} 
 
 .ans-box {
   height: 50px;
