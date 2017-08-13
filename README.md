@@ -1,1 +1,1 @@
-# TriviaGame-Money
+# TriviaGame
