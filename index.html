@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Julee" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
   <!-- <link href="assets/css/reset.css" rel="stylesheet"> -->
   <link href="assets/css/style.css" rel="stylesheet">
 
@@ -17,7 +18,61 @@
 </head>
 <body>
   <div class="container">
-		<div class="header">Trivia Game</div>
+
+    <div class="row" id="title_row">
+      <div class="col-sm-9" id="title">Trivia Game</div>
+      <div class="col-sm-3" id="money_box"><div class="cat-box" id="money">$</div></div>
+    </div>
+
+    <div class="row" id="cat_container">
+      <div class="row" id="cat_row">
+        <div class="col-sm-3 gen-col"><div class="cat-box" id="cat1">CAT1</div></div>
+        <div class="col-sm-3 gen-col"><div class="cat-box" id="cat2">CAT2</div></div>
+        <div class="col-sm-3 gen-col"><div class="cat-box" id="cat3">CAT3</div></div>
+        <div class="col-sm-3 gen-col"><div class="cat-box" id="cat4">CAT4</div></div>
+      </div>
+      <div class="row" id="easy_row">
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="easy1">$100</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="easy2">$100</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="easy3">$100</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="easy4">$100</div></div>
+      </div>
+      <div class="row" id="med_row">
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="med1">$200</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="med2">$200</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="med3">$200</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="med4">$200</div></div>
+      </div>
+      <div class="row" id="hard_row">
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="hard1">$300</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="hard2">$300</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="hard3">$300</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="hard4">$300</div></div>
+      </div>
+      <div class="row" id="imp_row">
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="imp1">$500</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="imp2">$500</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="imp3">$500</div></div>
+        <div class="col-sm-3 gen-col"><div class="sel-box" id="imp4">$500</div></div>
+      </div>
+    </div>
+
+    <div class="row" id="info_row"><div id="info">Timer</div></div>
+
+    <div class="row" id="question_row"><div id="question">Question</div></div>
+
+    <div class="row" id="answer_container">
+      <div class="row" id="answer_top_row">
+        <div class="col-sm-6 gen-col"><div class="ans-box" id="answer_box1">Answer1</div></div>
+        <div class="col-sm-6 gen-col"><div class="ans-box" id="answer_box2">Answer2</div></div>
+      </div>
+      <div class="row" id="answer_bot_row">
+        <div class="col-sm-6 gen-col"><div class="ans-box" id="answer_box3">Answer3</div></div>
+        <div class="col-sm-6 gen-col"><div class="ans-box" id="answer_box4">Answer4</div></div>
+      </div>
+    </div>
+
+<!-- 		<div class="header">Trivia Game</div>
 
 		<div class="trivia" id="trivia" correct="0" wrong="0" num="0">
 			<button id="reset">Start</button>
@@ -28,7 +83,7 @@
 			<div class="correct" id="correct">Correct: 0</div>
 			<div class="wrong" id="wrong">Wrong: 0</div>
 			<div class="num" id="num">Num: 0</div>
-		</div>
+		</div> -->
   </div>
 
   <script src="assets/javascript/elementsObjects.js"></script>

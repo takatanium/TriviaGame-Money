@@ -36,14 +36,95 @@ button {
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
   width: 600px;
   margin: auto;
   padding: 0px;
 }
 
-.header {
+.row {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.gen-col {
+  padding: 0 5px 0 5px;
+}
+
+#title_row {
+  height: 50px;
+  margin: 0 5px 5px 5px;
+}
+
+#title {
+  height: 50px;
+  line-height: 50px;
+  font-size: 30px;
+  text-align: left;
+  padding: 0;
+}
+
+#money_box {
+  padding: 0 0 0 7.5px;
+}
+
+#money {
+  height: 50px;
+  line-height: 50px;
+  font-size: 26px;
+  border: solid grey 2px;
+  background-color: lightgrey;
+  text-align: left;
+}
+
+#cat_row {
+  height: 50px;
+}
+
+#easy_row,
+#med_row,
+#hard_row,
+#imp_row {
+  height: 30px;
+}
+
+.cat-box {
+  height: 50px;
+  background-color: lightgrey;
+  border: solid grey 2px; 
+  line-height: 50px;
+}
+
+.sel-box {
+  height: 30px;
+  background-color: lightgrey;
+  border: solid grey 2px; 
+  line-height: 30px;
+}
+
+#info_row {
+  background-color: lightgrey;
+  border: solid grey 2px; 
+  height: 30px;
+  line-height: 26px;
+  margin: 0 5px 5px 5px; 
+}
+
+#question_row {
+  background-color: lightgrey;
+  border: solid grey 2px; 
+  height: 80px;
+  line-height: 30px;
+  margin: 0 5px 5px 5px;  
+}
+
+.ans-box {
+  height: 50px;
+  background-color: lightgrey;
+  border: solid grey 2px; 
+  line-height: 46px;
+}
+
+/*.header {
   width: 100%;
   border-bottom: solid grey 2px;
   margin-bottom: 10px;
@@ -107,4 +188,4 @@ button {
 .stats > div:last-child {
   border: 0;
 }
-
+*/
