@@ -21,15 +21,15 @@
 
     <div class="row" id="title_row">
       <div class="col-9" id="title">Trivia Game</div>
-      <div class="col-3" id="money_box"><div class="cat-box" id="money">$</div></div>
+      <div class="col-3" id="money_box"><div class="cat-box" id="money" amount="0">$</div></div>
     </div>
 
     <div class="row" id="cat_container">
-      <div class="row" id="cat_row">
-        <div class="col-3 gen-col"><div class="cat-box" id="cat1">CAT1</div></div>
-        <div class="col-3 gen-col"><div class="cat-box" id="cat2">CAT2</div></div>
-        <div class="col-3 gen-col"><div class="cat-box" id="cat3">CAT3</div></div>
-        <div class="col-3 gen-col"><div class="cat-box" id="cat4">CAT4</div></div>
+<!--       <div class="row" id="cat_row">
+        <div class="col-3 gen-col"><div class="cat-box" id="cat1">Representation</div></div>
+        <div class="col-3 gen-col"><div class="cat-box" id="cat2">Atomic Size</div></div>
+        <div class="col-3 gen-col"><div class="cat-box" id="cat3">Element Type</div></div>
+        <div class="col-3 gen-col"><div class="cat-box" id="cat4">Electronic</div></div>
       </div>
       <div class="row" id="easy_row">
         <div class="col-3 gen-col"><div class="sel-box" id="easy1">$100</div></div>
@@ -54,40 +54,27 @@
         <div class="col-3 gen-col"><div class="sel-box" id="imp2">$500</div></div>
         <div class="col-3 gen-col"><div class="sel-box" id="imp3">$500</div></div>
         <div class="col-3 gen-col"><div class="sel-box" id="imp4">$500</div></div>
-      </div>
+      </div> -->
     </div>
 
     <div class="row" id="info_row">
-      <div class="col-12 gen-col" id="info">Timer</div>
+      <div class="col-12 gen-col" id="info" count="0">Timer</div>
     </div>  
 
     <div class="row" id="question_row">
-      <div class="col-12 gen-col" id="question">Question</div>
+      <div class="col-12 gen-col" id="trivia" correct="0" wrong="0" num="0">Question</div>
     </div>
 
     <div class="row" id="answer_container">
       <div class="row" id="answer_top_row">
-        <div class="col-6 gen-col"><div class="ans-box" id="answer_box1">Answer1</div></div>
-        <div class="col-6 gen-col"><div class="ans-box" id="answer_box2">Answer2</div></div>
+        <div class="col-6 gen-col"><div class="ans-box" id="choice1">Answer1</div></div>
+        <div class="col-6 gen-col"><div class="ans-box" id="choice2">Answer2</div></div>
       </div>
       <div class="row" id="answer_bot_row">
-        <div class="col-6 gen-col"><div class="ans-box" id="answer_box3">Answer3</div></div>
-        <div class="col-6 gen-col"><div class="ans-box" id="answer_box4">Answer4</div></div>
+        <div class="col-6 gen-col"><div class="ans-box" id="choice3">Answer3</div></div>
+        <div class="col-6 gen-col"><div class="ans-box" id="choice4">Answer4</div></div>
       </div>
     </div>
-
-<!-- 		<div class="header">Trivia Game</div>
-
-		<div class="trivia" id="trivia" correct="0" wrong="0" num="0">
-			<button id="reset">Start</button>
-		</div>
-
-		<div class="stats" id="stats">
-			<div class="timer" id="timer" count="0" isRunning="false">5</div>
-			<div class="correct" id="correct">Correct: 0</div>
-			<div class="wrong" id="wrong">Wrong: 0</div>
-			<div class="num" id="num">Num: 0</div>
-		</div> -->
   </div>
 
   <script src="assets/javascript/elementsObjects.js"></script>

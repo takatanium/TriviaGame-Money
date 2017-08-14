@@ -21,8 +21,8 @@ h1 {
 }
 
 h2 {
-  margin-top: 30px;
-  font-size: 30px;
+  margin-top: 0px;
+  font-size: 18px;
 }
 
 p {
@@ -45,6 +45,10 @@ button {
   margin: 0;
   margin-bottom: 5px;
   width: 100%;
+}
+
+#cat_container {
+  margin: 0;
 }
 
 .gen-col {
@@ -100,6 +104,13 @@ button {
   background-color: lightgrey;
   border: solid grey 2px; 
   line-height: 30px;
+  cursor: pointer; 
+  cursor: hand;
+}
+
+.sel-box:hover,
+.ans-box:hover {
+  background-color: #FAFAD2;
 }
 
 #info_row,
@@ -115,11 +126,12 @@ button {
   line-height: 26px;  
 }
 
- #question {
+ #trivia {
   background-color: lightgrey;
   border: solid grey 2px; 
   height: 80px;
-  line-height: 30px;
+  line-height: 76px;
+  font-size: 26px;
 } 
 
 .ans-box {
@@ -127,6 +139,9 @@ button {
   background-color: lightgrey;
   border: solid grey 2px; 
   line-height: 46px;
+  cursor: pointer; 
+  cursor: hand;
+  font-size: 18px;
 }
 
 /*.header {
