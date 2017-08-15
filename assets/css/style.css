@@ -72,7 +72,7 @@ button {
   height: 50px;
   background-color: lightgrey;
   border: solid grey 2px; 
-  line-height: 50px;
+  line-height: 46px;
   font-size: 16px;
 }
 
@@ -101,6 +101,8 @@ button {
 
 #money {
   margin-right: 5px;
+  /*text-shadow: 0px 0px 2px black;*/
+  font-weight: bold;
 }
 
 #cat_row {
@@ -178,16 +180,20 @@ button {
 }
 
 .blink {
-  animation: blink-animation 1s steps(5, start) infinite;
-  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+  animation: blink-animation .5s step-end infinite alternate;
+  -webkit-animation: blink-animation .5s step-end infinite alternate;
 }
 @keyframes blink-animation {
-  to {
-    visibility: hidden;
+  50% {
+    /*border-color: #46D301;*/
+    border: solid #46D301 4px;
+    line-height: 42px;
   }
 }
 @-webkit-keyframes blink-animation {
-  to {
-    visibility: hidden;
+  50% {
+    /*border-color: #46D301;*/
+    border: solid #46D301 4px;
+    line-height: 42px;
   }
 }

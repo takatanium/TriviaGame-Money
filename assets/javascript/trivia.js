@@ -17,7 +17,6 @@ var game = {
 
 		//increment money
 		var money = parseInt($('#money').attr('amount')) + parseInt($('#'+id).attr('amount'));
-		console.log(money);
 		$('#money').attr('amount', money).text(money);
 	},
 	incWrong: function(id, num) {
@@ -67,7 +66,7 @@ var timer = {
 					display.promptQuestion();
 				}
 			}
-		}, 1000));
+		}, 1500));
 	},
 	stop: function() {
 		clearInterval($('#info').attr('intervalId'));
@@ -109,7 +108,7 @@ var display = {
 		for (var i = 1; i <= 4; i++) {
 			$('#choice'+i).html(tools.capFirst($('#choice'+i).attr('name')) + ': ' + $('#choice'+i).attr('mark').split(" ")[0]);
 			if ($('#choice'+i).attr('isAnswer') === "1") {
-				$('#choice'+i).css('border', 'solid #46D301 4px');
+				// $('#choice'+i).css('border', 'solid grey 4px');
 				$('#choice'+i).addClass('blink');
 			}
 		}
@@ -204,7 +203,6 @@ var display = {
 		});
 	},
 	markCatSel: function(id, status) {
-		console.log(status);
 		var text, color, img;
 		if (status === "1") {
 			text = "correct!";
@@ -221,7 +219,7 @@ var display = {
 		else {
 			text = "--";
 			color = "#FAFAD2";
-			$('#'+id).html(text);
+			$('#'+id).html(text).css('color', color);
 		}
 		$('#'+id).css('border', 'solid ' + color + ' 4px');
 		$('#'+id).removeClass('sel-hover').off('click');
