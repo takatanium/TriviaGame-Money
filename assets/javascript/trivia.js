@@ -226,7 +226,7 @@ var display = {
 			inner.attr({
 				id: whichRow+i,
 				clicked: 'false',
-				amount: label[i]
+				amount: label[i-1]
 			});
 			outer.append(inner);
 			row.append(outer);
