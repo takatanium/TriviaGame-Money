@@ -18,6 +18,9 @@ var game = {
 		//increment money
 		var money = parseInt($('#money').attr('amount')) + parseInt($('#'+id).attr('amount'));
 		$('#money').attr('amount', money).text(money);
+
+		//increment num
+		game.incNum();
 	},
 	incWrong: function(id, num) {
 		var wrong = parseInt($('#trivia').attr("wrong"));
@@ -25,6 +28,9 @@ var game = {
 			wrong++;
 		}
 		$('#trivia').attr("wrong", wrong);
+
+		//increment num
+		game.incNum();
 	},
 	incNum: function() {
 		var num = parseInt($('#trivia').attr("num"));
@@ -44,11 +50,15 @@ var timer = {
 			count++;
 			$('#info').attr('count', count);
 
+			console.log($('#info').attr('intervalId'));
+			console.log(currentPage + ": " + $('#info').attr('count'));
+
 			if (currentPage === "question") {
 				timer.display(sec-count);
 
 				if (count >= sec) {
-					timer.stop();
+					timer.answer(3);
+
 					display.answer("-1");
 					display.markCatSel(id,"-1");
 					display.unbindChoiceClicks();
@@ -56,19 +66,20 @@ var timer = {
 					$('.sel-box').each(function() {
 						display.bindSelClicks(this.id);
 					});
-					//start timer for answer
-					timer.start(5, "answer", "");
 				}
 			}
 			else {
 				if (count >= sec) {
+					console.log("Here");
 					timer.stop();
-					display.promptQuestion();
+					//check if grid is done
+					$('#trivia').attr('num') === "16" ? display.stats() : display.promptQuestion();
 				}
 			}
 		}, 1500));
 	},
 	stop: function() {
+		console.log($('#info').attr('intervalId'));
 		clearInterval($('#info').attr('intervalId'));
 	},
 	display: function(time) {
@@ -77,6 +88,10 @@ var timer = {
 			var box = $('<div>').addClass('red-box');
 			$('#info').append(box);
 		}
+	},
+	answer: function(time) {
+		timer.stop();
+		timer.start(time, "answer", "");		
 	}
 }
 
@@ -100,27 +115,27 @@ var display = {
 		$('#trivia').html("Select a Category").css('line-height', '76px');
 	},
 	answer: function(id, correct) {
-		timer.stop();
-		timer.start(5, "answer", "");
+		timer.answer(3);
 
 		correct === "1" ? game.incCorrect(id) : game.incWrong(id, correct);
 
 		for (var i = 1; i <= 4; i++) {
 			$('#choice'+i).html(tools.capFirst($('#choice'+i).attr('name')) + ': ' + $('#choice'+i).attr('mark').split(" ")[0]);
 			if ($('#choice'+i).attr('isAnswer') === "1") {
-				// $('#choice'+i).css('border', 'solid grey 4px');
 				$('#choice'+i).addClass('blink');
 			}
 		}
 	},
 	stats: function() {
-		$('#timer').text("--");
-		var percentCorrect = (parseInt($('#trivia').attr('correct'))/parseInt($('#trivia').attr('num'))) * 100;
-		var percentWrong = (parseInt($('#trivia').attr('wrong'))/parseInt($('#trivia').attr('num'))) * 100;
-		var percentAnswered = (parseInt($('#trivia').attr('correct'))+parseInt($('#trivia').attr('wrong')))/parseInt($('#trivia').attr('num')) * 100;
+		display.promptQuestion();
 
-		$('#trivia').html("<h1>Statistics</h1>");
-		$('#trivia').append("<p>Correct: " + percentCorrect + "%</p>");
+		$('#info').html("Your Results");
+
+		var percentCorrect = Math.round((parseInt($('#trivia').attr('correct'))/parseInt($('#trivia').attr('num'))) * 100);
+		var percentWrong = Math.round((parseInt($('#trivia').attr('wrong'))/parseInt($('#trivia').attr('num'))) * 100);
+		var percentAnswered = Math.round((parseInt($('#trivia').attr('correct'))+parseInt($('#trivia').attr('wrong')))/parseInt($('#trivia').attr('num')) * 100);
+
+		$('#trivia').html("<p>Correct: " + percentCorrect + "%</p>");
 		$('#trivia').append("<p>Wrong: " + percentWrong + "%</p>");
 		$('#trivia').append("<p>Unanswered: " + (100-percentAnswered) + "%</p>");
 	},

@@ -27,7 +27,9 @@ h2 {
 
 p {
   font-size: 18px;
-  margin: 10px 0 10px 0;
+  height: 20px;
+  line-height: 20px;
+  margin: 4px 0 2px 0;
 }
 
 button {
@@ -151,6 +153,8 @@ button {
   flex-direction: row;
   justify-content: center;  
   align-items: center;
+  text-align: center;
+  font-size: 22px;
 }
 
 .red-box {
