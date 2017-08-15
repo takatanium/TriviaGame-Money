@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	display.categories();
-
+	display.promptQuestion();
 });
 
 var game = {
@@ -35,29 +35,75 @@ var game = {
 }
 
 var timer = {
-	start: function(sec, currentPage) {
-		$('#info').text("Timer: " + sec);
+	start: function(sec, currentPage, id) {
 		$('#info').attr('count', "0");
+
+		if (currentPage === "question") timer.display(5);
 
 		$('#info').attr('intervalId', setInterval(function() {
 			var count = parseInt($('#info').attr('count'));
 			count++;
 			$('#info').attr('count', count);
-			$('#info').text("Timer: " + (sec - count));
 
-			if (count >= sec+1) {
-				currentPage === "answer" ? display.question() : display.answer("-1");
+			if (currentPage === "question") {
+				timer.display(sec-count);
+
+				if (count >= sec) {
+					timer.stop();
+					display.answer("-1");
+					display.markCatSel(id,"-1");
+					display.unbindChoiceClicks();
+					//bind the clicks
+					$('.sel-box').each(function() {
+						display.bindSelClicks(this.id);
+					});
+					//start timer for answer
+					timer.start(5, "answer", "");
+				}
+			}
+			else {
+				if (count >= sec) {
+					timer.stop();
+					display.promptQuestion();
+				}
 			}
 		}, 1000));
 	},
 	stop: function() {
 		clearInterval($('#info').attr('intervalId'));
+	},
+	display: function(time) {
+		$('#info').empty();
+		for (var i = 0; i < time+time-1; i++) {
+			var box = $('<div>').addClass('red-box');
+			$('#info').append(box);
+		}
 	}
 }
 
 var display = {
+	promptQuestion: function() {
+		timer.display(0); //clear timer
+		//rebuild choices
+		var selRow1 = $('<div>').addClass('row').attr('id', 'answer_top_row');
+		var selRow2 = $('<div>').addClass('row').attr('id', 'answer_bot_row');
+
+		for (var i = 1; i <= 4; i++) {
+			var box = $('<div>').addClass('col-6 gen-col');
+			var choice = $('<div>').addClass('ans-box').attr('id', 'choice' + i);
+			box.append(choice);
+			i < 3 ? selRow1.append(box) : selRow2.append(box);
+		}
+
+		$('#answer_container').html(selRow1);
+		$('#answer_container').append(selRow2);
+
+		$('#trivia').html("Select a Category").css('line-height', '76px');
+	},
 	answer: function(id, correct) {
 		timer.stop();
+		timer.start(5, "answer", "");
+
 		correct === "1" ? game.incCorrect(id) : game.incWrong(id, correct);
 
 		for (var i = 1; i <= 4; i++) {
@@ -164,18 +210,19 @@ var display = {
 			text = "correct!";
 			color = "#46D301";
 			img = "assets/images/mark_check.png";
+			$('#'+id).html("<img class='sel-img' src="+img+">");
 		}
 		else if (status === "0") {
 			text = "wrong!";
 			color = "#D30000";
 			img = "assets/images/mark_x.png";
+			$('#'+id).html("<img class='sel-img' src="+img+">");
 		}
 		else {
 			text = "--";
 			color = "#FAFAD2";
-			img = "";
+			$('#'+id).html(text);
 		}
-		$('#'+id).html("<img class='sel-img' src="+img+">");
 		$('#'+id).css('border', 'solid ' + color + ' 4px');
 		$('#'+id).removeClass('sel-hover').off('click');
 	},
@@ -308,9 +355,11 @@ var display = {
 		$('.sel-box').removeClass('sel-hover'); //turns off hover
 	},
 	standardSelClick: function(id) {
+		timer.stop();
 		$('#'+id).attr('clicked', 'true');
 		$('#'+id).css('border', 'solid #FAFAD2 4px');
 		display.unbindSelClicks();	
+		timer.start(5, "question", id);
 	},
 	unbindChoiceClicks: function() {
 		$('.ans-box').off('click'); //turns clicks off

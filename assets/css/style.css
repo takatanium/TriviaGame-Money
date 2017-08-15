@@ -144,7 +144,18 @@ button {
   background-color: lightgrey;
   border: solid grey 2px; 
   height: 30px;
-  line-height: 26px;  
+  line-height: 26px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;  
+  align-items: center;
+}
+
+.red-box {
+  height: 20px;
+  width: 10.4%;
+  background-color: #D30000;
+  margin: 0 2px 0 2px;
 }
 
  #trivia {
