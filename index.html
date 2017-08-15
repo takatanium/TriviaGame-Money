@@ -21,58 +21,30 @@
 
     <div class="row" id="title_row">
       <div class="col-9" id="title">Trivia Game</div>
-      <div class="col-3" id="money_box"><div class="cat-box" id="money" amount="0">$</div></div>
+      <div class="col-3" id="money_container"><div class="cat-box money-box">
+        <div id="dollar_sign">$</div>
+        <div id="money" amount="0">0</div>
+      </div></div>
     </div>
 
-    <div class="row" id="cat_container">
-<!--       <div class="row" id="cat_row">
-        <div class="col-3 gen-col"><div class="cat-box" id="cat1">Representation</div></div>
-        <div class="col-3 gen-col"><div class="cat-box" id="cat2">Atomic Size</div></div>
-        <div class="col-3 gen-col"><div class="cat-box" id="cat3">Element Type</div></div>
-        <div class="col-3 gen-col"><div class="cat-box" id="cat4">Electronic</div></div>
-      </div>
-      <div class="row" id="easy_row">
-        <div class="col-3 gen-col"><div class="sel-box" id="easy1">$100</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="easy2">$100</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="easy3">$100</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="easy4">$100</div></div>
-      </div>
-      <div class="row" id="med_row">
-        <div class="col-3 gen-col"><div class="sel-box" id="med1">$200</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="med2">$200</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="med3">$200</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="med4">$200</div></div>
-      </div>
-      <div class="row" id="hard_row">
-        <div class="col-3 gen-col"><div class="sel-box" id="hard1">$300</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="hard2">$300</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="hard3">$300</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="hard4">$300</div></div>
-      </div>
-      <div class="row" id="imp_row">
-        <div class="col-3 gen-col"><div class="sel-box" id="imp1">$500</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="imp2">$500</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="imp3">$500</div></div>
-        <div class="col-3 gen-col"><div class="sel-box" id="imp4">$500</div></div>
-      </div> -->
-    </div>
+    <div class="row" id="cat_container"></div>
 
     <div class="row" id="info_row">
       <div class="col-12 gen-col" id="info" count="0">Timer</div>
     </div>  
 
     <div class="row" id="question_row">
-      <div class="col-12 gen-col" id="trivia" correct="0" wrong="0" num="0">Question</div>
+      <div class="col-12 gen-col" id="trivia" correct="0" wrong="0" num="0">Select a Category</div>
     </div>
 
     <div class="row" id="answer_container">
       <div class="row" id="answer_top_row">
-        <div class="col-6 gen-col"><div class="ans-box" id="choice1">Answer1</div></div>
-        <div class="col-6 gen-col"><div class="ans-box" id="choice2">Answer2</div></div>
+        <div class="col-6 gen-col"><div class="ans-box" id="choice1"></div></div>
+        <div class="col-6 gen-col"><div class="ans-box" id="choice2"></div></div>
       </div>
       <div class="row" id="answer_bot_row">
-        <div class="col-6 gen-col"><div class="ans-box" id="choice3">Answer3</div></div>
-        <div class="col-6 gen-col"><div class="ans-box" id="choice4">Answer4</div></div>
+        <div class="col-6 gen-col"><div class="ans-box" id="choice3"></div></div>
+        <div class="col-6 gen-col"><div class="ans-box" id="choice4"></div></div>
       </div>
     </div>
   </div>

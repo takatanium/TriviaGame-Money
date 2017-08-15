@@ -1,13 +1,5 @@
 $(document).ready(function(){
 
-	// $('.sel-box').on('click', function(){
-	// 	//map each car selection
-	// 	if ($('.sel-box').attr('id') === "easy1") {
-	// 			console.log("Hit");
-	// 			trivia.symbol();
-	// 	}
-
-	// });
 	display.categories();
 
 });
@@ -18,25 +10,27 @@ var game = {
 		$('#trivia').attr('wrong', "0");
 		$('#trivia').attr('num', "0");
 	},
-	incCorrect: function() {
+	incCorrect: function(id) {
 		var correct = parseInt($('#trivia').attr("correct"));
 		correct++;
 		$('#trivia').attr('correct', correct);
-		$('#correct').html("Correct: " + correct);
+
+		//increment money
+		var money = parseInt($('#money').attr('amount')) + parseInt($('#'+id).attr('amount'));
+		console.log(money);
+		$('#money').attr('amount', money).text(money);
 	},
-	incWrong: function(num) {
+	incWrong: function(id, num) {
 		var wrong = parseInt($('#trivia').attr("wrong"));
 		if (num !== "-1") {
 			wrong++;
 		}
 		$('#trivia').attr("wrong", wrong);
-		$('#wrong').html("Wrong: " + wrong);
 	},
 	incNum: function() {
 		var num = parseInt($('#trivia').attr("num"));
 		num++;
 		$('#trivia').attr("num", num);
-		$('#num').html("Num: " + num);
 	}
 }
 
@@ -62,35 +56,17 @@ var timer = {
 }
 
 var display = {
-	question: function() {
+	answer: function(id, correct) {
 		timer.stop();
-		// parseInt($('#trivia').attr("num")) > 4 ? this.stats() : this.callQuestion();
-		this.callQuestion();
-	},
-	callQuestion: function() {
-		game.incNum();
+		correct === "1" ? game.incCorrect(id) : game.incWrong(id, correct);
 
-		//display random question
-		var question = trivia.questions[tools.getRandom(trivia.questions.length)];
-    eval('trivia.'+question+'()');
-
-		timer.start(5, "question");
-	},
-	answer: function(correct) {
-		timer.stop();
-		correct === "1" ? game.incCorrect() : game.incWrong(correct);
-
-		// for (var i = 1; i <= 4; i++) {
-		// 	$('#choice'+i).html('<h2>' + tools.capFirst($('#choice'+i).attr('name')) + '</h2>');
-		// 	$('#choice'+i).append('<p>' + $('#choice'+i).attr('mark') + '</p>').css('font-size', '10px');
-		// 	$('.ans-box').css('line-height', '16px');
-
-		// 	if ($('#choice'+i).attr('isAnswer') === "1") {
-		// 		$('#choice'+i).css('background-color', '#90EE90');
-		// 	}
-		// }
-
-		// timer.start(3, "answer");
+		for (var i = 1; i <= 4; i++) {
+			$('#choice'+i).html(tools.capFirst($('#choice'+i).attr('name')) + ': ' + $('#choice'+i).attr('mark').split(" ")[0]);
+			if ($('#choice'+i).attr('isAnswer') === "1") {
+				$('#choice'+i).css('border', 'solid #46D301 4px');
+				$('#choice'+i).addClass('blink');
+			}
+		}
 	},
 	stats: function() {
 		$('#timer').text("--");
@@ -102,38 +78,106 @@ var display = {
 		$('#trivia').append("<p>Correct: " + percentCorrect + "%</p>");
 		$('#trivia').append("<p>Wrong: " + percentWrong + "%</p>");
 		$('#trivia').append("<p>Unanswered: " + (100-percentAnswered) + "%</p>");
-		// $('#trivia').append("<button id='reset'>Restart</button>");
-		// $('#reset').on('click', function(){
-		// 	game.reset();
-		// 	// display.question();
-		// });
-
 	},
-	attachClicks: function() {
+	attachClicks: function(id) {
 		$('#choice1').on('click', function() {
-			display.answer($('#choice1').attr('isAnswer'));
-			if ($('#choice1').attr('isAnswer')==="0") {
-				$('#choice1').css('border', 'solid #DC143C 2px');
+			display.answer(id, $('#choice1').attr('isAnswer'));
+			if ($('#choice1').attr('isAnswer') === "0") {
+				$('#choice1').css('border', 'solid #D30000 4px');
+				display.markCatSel(id,"0");
+			} 
+			else if ($('#choice1').attr('isAnswer') === "1") {
+				display.markCatSel(id,"1");
 			}
+			else {
+				display.markCatSel(id,"-1");
+			}
+			//bind the clicks
+			$('.sel-box').each(function() {
+				display.bindSelClicks(this.id);
+			});
+			//unbind choice clicks
+			display.unbindChoiceClicks();
 		});
 		$('#choice2').on('click', function() {
-			display.answer($('#choice2').attr('isAnswer'));
-			if ($('#choice2').attr('isAnswer')==="0") {
-				$('#choice2').css('border', 'solid #DC143C 2px');
+			display.answer(id, $('#choice2').attr('isAnswer'));
+			if ($('#choice2').attr('isAnswer') === "0") {
+				$('#choice2').css('border', 'solid #D30000 4px');
+				display.markCatSel(id,"0");
 			}
+			else if ($('#choice2').attr('isAnswer') === "1") {
+				display.markCatSel(id,"1");
+			}
+			else {
+				display.markCatSel(id,"-1");
+			}
+			//bind the clicks
+			$('.sel-box').each(function() {
+				display.bindSelClicks(this.id);
+			});
+			//unbind choice clicks
+			display.unbindChoiceClicks();
 		});
 		$('#choice3').on('click', function() {
-			display.answer($('#choice3').attr('isAnswer'));
-			if ($('#choice3').attr('isAnswer')==="0") {
-				$('#choice3').css('border', 'solid #DC143C 2px');
+			display.answer(id, $('#choice3').attr('isAnswer'));
+			if ($('#choice3').attr('isAnswer') === "0") {
+				$('#choice3').css('border', 'solid #D30000 4px');
+				display.markCatSel(id,"0");
 			}
+			else if ($('#choice3').attr('isAnswer') === "1") {
+				display.markCatSel(id,"1");
+			}
+			else {
+				display.markCatSel(id,"-1");
+			}
+			//bind the clicks
+			$('.sel-box').each(function() {
+				display.bindSelClicks(this.id);
+			});
+			//unbind choice clicks
+			display.unbindChoiceClicks();
 		});
 		$('#choice4').on('click', function() {
-			display.answer($('#choice4').attr('isAnswer'));
-			if ($('#choice4').attr('isAnswer')==="0") {
-				$('#choice4').css('border', 'solid #DC143C 2px');
+			display.answer(id, $('#choice4').attr('isAnswer'));
+			if ($('#choice4').attr('isAnswer') === "0") {
+				$('#choice4').css('border', 'solid #D30000 4px');
+				display.markCatSel(id,"0");
 			}
+			else if ($('#choice4').attr('isAnswer') === "1") {
+				display.markCatSel(id,"1");
+			}
+			else {
+				display.markCatSel(id,"-1");
+			}
+			//bind the cat sel clicks
+			$('.sel-box').each(function() {
+				display.bindSelClicks(this.id);
+			});
+			//unbind choice clicks
+			display.unbindChoiceClicks();
 		});
+	},
+	markCatSel: function(id, status) {
+		console.log(status);
+		var text, color, img;
+		if (status === "1") {
+			text = "correct!";
+			color = "#46D301";
+			img = "assets/images/mark_check.png";
+		}
+		else if (status === "0") {
+			text = "wrong!";
+			color = "#D30000";
+			img = "assets/images/mark_x.png";
+		}
+		else {
+			text = "--";
+			color = "#FAFAD2";
+			img = "";
+		}
+		$('#'+id).html("<img class='sel-img' src="+img+">");
+		$('#'+id).css('border', 'solid ' + color + ' 4px');
+		$('#'+id).removeClass('sel-hover').off('click');
 	},
 	categories: function() { //builds the entirety of categories
 		//build out category titles
@@ -142,6 +186,12 @@ var display = {
 		$('#cat_container').append(this.genCatRow('med'));
 		$('#cat_container').append(this.genCatRow('hard'));
 		$('#cat_container').append(this.genCatRow('imp'));
+
+		//bind the clicks
+		$('.sel-box').each(function() {
+			display.bindSelClicks(this.id);
+		});
+
 	},
 	genCatRow: function(whichRow) {
 		var label = [];
@@ -150,16 +200,16 @@ var display = {
         label = ["Representation", "Atomic Size", "Element Type", "Electronic"];
         break;
 	    case "easy":
-	      label = ["$100", "$100", "$100", "$100"];
+	      label = ["100", "100", "100", "100"];
         break;
 	    case "med":
-	      label = ["$200", "$200", "$200", "$200"];
+	      label = ["200", "200", "200", "200"];
 	    	break;
 	    case "hard":
-	      label = ["$300", "$300", "$300", "$300"];
+	      label = ["300", "300", "300", "300"];
 	    	break;
 	    case "imp":
-	      label = ["$500", "$500", "$500", "$500"];
+	      label = ["500", "500", "500", "500"];
 	    	break;
 	    default:
 	    	label = [];
@@ -167,65 +217,109 @@ var display = {
 
 		var row = $('<div>').addClass('row').attr('id', whichRow+'_row');
 		for (var i = 1; i <= 4; i++) {
-			var outer, inner, cl;
+			var outer, inner, cl, hv, text;
 			outer = $('<div>').addClass('col-3 gen-col');
 			whichRow === "cat" ? cl = "cat-box" : cl = "sel-box";
-			inner = $('<div>').addClass(cl).attr('id', whichRow+i).text(label[i-1]);
-			//create onclicks
-			if (cl === "sel-box") {
-				switch (i) {
-					case 1:
-						inner.on('click', function() {
-							whichRow === "easy" || whichRow === "med" ? trivia.symbol() : trivia.number();
-						});
-						break;
-					case 2:
-						inner.on('click', function() {
-							trivia.radius();
-						});
-						break;
-					case 3:
-						inner.on('click', function() {
-							whichRow === "easy" ? trivia.radioactive() : trivia.member();
-						});
-						break;
-					case 4:
-						inner.on('click', function() {
-							whichRow === "easy" || whichRow === "med" ? trivia.eleneg() : trivia.eleaff();
-						});
-						break;
-					default:
-						console.log("Error generating selections");
-				}				
-			}
+			whichRow === "cat" ? hv = "" : hv = "sel-hover";
+			whichRow === "cat" ? text = label[i-1] : text = '$'+label[i-1];
+			inner = $('<div>').addClass(cl+" "+hv).text(text);
+			inner.attr({
+				id: whichRow+i,
+				clicked: 'false',
+				amount: label[i]
+			});
 			outer.append(inner);
 			row.append(outer);
 		}
-
 		return row;
 	},
-	getOnClick: function(whichRow, whichCol) {
-		switch (whichCol) {
-			case 1:
-				trivia.symbol();
-				break;
-			case 2:
-				trivia.radius();
-				break;
-			case 3:
-				trivia.member();
-				break;
-			case 4:
-				trivia.eleneg();
-				break;
-			default:
-				console.log("Error generating selections");
+	bindSelClicks: function(id) {
+		if ($('#'+id).attr('clicked') === "false") {
+			switch (id) {
+				case "easy1" : $('#'+id).on('click', function(){
+																		trivia.symbol(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "med1" : $('#'+id).on('click', function(){
+																		trivia.symbol(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "hard1" : $('#'+id).on('click', function(){
+																		trivia.number(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "imp1" : $('#'+id).on('click', function(){
+																		trivia.number(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "easy2" : $('#'+id).on('click', function(){
+																		trivia.radius(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "med2" : $('#'+id).on('click', function(){
+																		trivia.radius(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "hard2" : $('#'+id).on('click', function(){
+																		trivia.radius(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "imp2" : $('#'+id).on('click', function(){
+																		trivia.radius(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "easy3" : $('#'+id).on('click', function(){
+																		trivia.member(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "med3" : $('#'+id).on('click', function(){
+																		trivia.member(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "hard3" : $('#'+id).on('click', function(){
+																		trivia.radioactive(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "imp3" : $('#'+id).on('click', function(){
+																		trivia.member(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "easy4" : $('#'+id).on('click', function(){
+																		trivia.eleneg(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "med4" : $('#'+id).on('click', function(){
+																		trivia.eleneg(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "hard4" : $('#'+id).on('click', function(){
+																		trivia.eleaff(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+				case "imp4" : $('#'+id).on('click', function(){
+																		trivia.eleaff(id);
+																		display.standardSelClick(id);
+																		}).addClass('sel-hover'); break;
+			}
 		}
+	},
+	unbindSelClicks: function() {
+		$('.sel-box').off('click'); //turns clicks off
+		$('.sel-box').removeClass('sel-hover'); //turns off hover
+	},
+	standardSelClick: function(id) {
+		$('#'+id).attr('clicked', 'true');
+		$('#'+id).css('border', 'solid #FAFAD2 4px');
+		display.unbindSelClicks();	
+	},
+	unbindChoiceClicks: function() {
+		$('.ans-box').off('click'); //turns clicks off
+		$('.ans-box').removeClass('ans-hover'); //removes hover
 	}
 }
 
 var trivia = {
-	symbol: function() {
+	symbol: function(id) {
 		//randomly get four elements
 		var arr = this.getUniqueElem(4);
 
@@ -237,7 +331,7 @@ var trivia = {
 
 		for (var i = 1; i <= 4; i++) {
 			var box = $('<div>').addClass('col-6 gen-col');
-			var choice = $('<div>').addClass('ans-box').attr('id', 'choice' + i);
+			var choice = $('<div>').addClass('ans-box ans-hover').attr('id', 'choice' + i);
 			choice.text(tools.capFirst(arr[i-1].name));
 			choice.attr('mark', arr[i-1].symbol);
 			choice.attr('name', arr[i-1].name);
@@ -249,11 +343,11 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element has the symbol " + arr[correctIndex].symbol) + "?";
+		$('#trivia').html("Which element has the symbol " + arr[correctIndex].symbol + "?").css('line-height', '76px');
 
-		display.attachClicks();
+		display.attachClicks(id);
 	},
-	number: function() {
+	number: function(id) {
 		//randomly get four elements
 		var arr = this.getUniqueElem(4);
 
@@ -265,7 +359,7 @@ var trivia = {
 
 		for (var i = 1; i <= 4; i++) {
 			var box = $('<div>').addClass('col-6 gen-col');
-			var choice = $('<div>').addClass('ans-box').attr('id', 'choice' + i);
+			var choice = $('<div>').addClass('ans-box ans-hover').attr('id', 'choice' + i);
 			choice.text(tools.capFirst(arr[i-1].name));
 			choice.attr('mark', arr[i-1].number);
 			choice.attr('name', arr[i-1].name);
@@ -277,11 +371,11 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element has the atomic number " + arr[correctIndex].number) + "?";
+		$('#trivia').html("Which element has the atomic number " + arr[correctIndex].number + "?").css('line-height', '38px');
 
-		display.attachClicks();
+		display.attachClicks(id);
 	},
-	radius: function() {
+	radius: function(id) {
 		//randomly get four elements
 		var arr = this.getUniqueKey(4, "radius");
 
@@ -293,7 +387,7 @@ var trivia = {
 
 		for (var i = 1; i <= 4; i++) {
 			var box = $('<div>').addClass('col-6 gen-col');
-			var choice = $('<div>').addClass('ans-box').attr('id', 'choice' + i);
+			var choice = $('<div>').addClass('ans-box ans-hover').attr('id', 'choice' + i);
 			choice.text(tools.capFirst(arr[i-1].name));
 			choice.attr('mark', arr[i-1].radius);
 			choice.attr('name', arr[i-1].name);
@@ -305,11 +399,11 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element has the largest atomic radius?");
+		$('#trivia').html("Which element has the largest atomic radius?").css('line-height', '38px');
 
-		display.attachClicks();
+		display.attachClicks(id);
 	},
-	eleneg: function() {
+	eleneg: function(id) {
 		//randomly get four elements
 		var arr = this.getUniqueKey(4, "eleneg");
 
@@ -321,7 +415,7 @@ var trivia = {
 
 		for (var i = 1; i <= 4; i++) {
 			var box = $('<div>').addClass('col-6 gen-col');
-			var choice = $('<div>').addClass('ans-box').attr('id', 'choice' + i);
+			var choice = $('<div>').addClass('ans-box ans-hover').attr('id', 'choice' + i);
 			choice.text(tools.capFirst(arr[i-1].name));
 			choice.attr('name', arr[i-1].name);
 			choice.attr('mark', arr[i-1].eleneg);
@@ -333,11 +427,11 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element has the greatest electronegativity?");
+		$('#trivia').html("Which element has the greatest electronegativity?").css('line-height', '38px');
 
-		display.attachClicks();
+		display.attachClicks(id);
 	},
-	eleaff: function() {
+	eleaff: function(id) {
 		//randomly get four elements
 		var arr = this.getUniqueKey(4, "eleaff");
 
@@ -349,7 +443,7 @@ var trivia = {
 
 		for (var i = 1; i <= 4; i++) {
 			var box = $('<div>').addClass('col-6 gen-col');
-			var choice = $('<div>').addClass('ans-box').attr('id', 'choice' + i);
+			var choice = $('<div>').addClass('ans-box ans-hover').attr('id', 'choice' + i);
 			choice.text(tools.capFirst(arr[i-1].name));
 			choice.attr('name', arr[i-1].name);
 			choice.attr('mark', arr[i-1].eleaff);
@@ -361,11 +455,11 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element has the greatest electron affinity?");
+		$('#trivia').html("Which element has the greatest electron affinity?").css('line-height', '38px');
 
-		display.attachClicks();
+		display.attachClicks(id);
 	},
-	member: function() {
+	member: function(id) {
 		//randomly get four elements
 		var arr = this.getUniqueKey(4, "member");
 
@@ -377,7 +471,7 @@ var trivia = {
 
 		for (var i = 1; i <= 4; i++) {
 			var box = $('<div>').addClass('col-6 gen-col');
-			var choice = $('<div>').addClass('ans-box').attr('id', 'choice' + i);
+			var choice = $('<div>').addClass('ans-box ans-hover').attr('id', 'choice' + i);
 			choice.text(tools.capFirst(arr[i-1].name));
 			choice.attr('name', arr[i-1].name);
 			choice.attr('mark', arr[i-1].member);
@@ -389,11 +483,13 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element is a member of the " + arr[correctIndex].member +'s?');
+		var plurality;
+		arr[correctIndex].member === "noble gas" ? plurality = "es" : plurality = "s"; 
+		$('#trivia').html("Which element is a member of the " + arr[correctIndex].member + plurality + '?').css('line-height', '38px');
 
-		display.attachClicks();
+		display.attachClicks(id);
 	},
-	radioactive: function() {
+	radioactive: function(id) {
 		//randomly get four elements
 		var arr = this.getUniqueBool(4, "radioactive");
 		
@@ -402,7 +498,7 @@ var trivia = {
 
 		for (var i = 1; i <= 4; i++) {
 			var box = $('<div>').addClass('col-6 gen-col');
-			var choice = $('<div>').addClass('ans-box').attr('id', 'choice' + i);
+			var choice = $('<div>').addClass('ans-box ans-hover').attr('id', 'choice' + i);
 			choice.text(tools.capFirst(arr[i-1].name));
 			choice.attr('name', arr[i-1].name);
 			choice.attr('mark', arr[i-1].radioactive);
@@ -413,10 +509,10 @@ var trivia = {
 
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
-		
-		$('#trivia').html("Which element is radioactive?");
 
-		display.attachClicks();
+		$('#trivia').html("Which element is radioactive?").css('line-height', '76px');
+
+		display.attachClicks(id);
 	},
 	getUniqueElem: function(num) {
 		var arr = [];
