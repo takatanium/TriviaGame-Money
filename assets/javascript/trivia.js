@@ -59,7 +59,7 @@ var timer = {
 				if (count >= sec) {
 					timer.answer(3);
 
-					display.answer("-1");
+					display.answer(id, "-1");
 					display.markCatSel(id,"-1");
 					display.unbindChoiceClicks();
 					//bind the clicks
