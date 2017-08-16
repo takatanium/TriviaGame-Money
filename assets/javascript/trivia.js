@@ -297,67 +297,67 @@ var display = {
 		if ($('#'+id).attr('clicked') === "false") {
 			switch (id) {
 				case "easy1" : $('#'+id).on('click', function(){
-																		trivia.symbol(id);
+																		trivia.symbol(id, [0,18]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "med1" : $('#'+id).on('click', function(){
-																		trivia.symbol(id);
+																		trivia.symbol(id, [18,109]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "hard1" : $('#'+id).on('click', function(){
-																		trivia.number(id);
+																		trivia.number(id, [0,18]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "imp1" : $('#'+id).on('click', function(){
-																		trivia.number(id);
+																		trivia.number(id, [18,109]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "easy2" : $('#'+id).on('click', function(){
-																		trivia.radius(id);
+																		trivia.radius(id, [0,10]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "med2" : $('#'+id).on('click', function(){
-																		trivia.radius(id);
+																		trivia.radius(id, [10,36]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "hard2" : $('#'+id).on('click', function(){
-																		trivia.radius(id);
+																		trivia.radius(id, [0,54]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "imp2" : $('#'+id).on('click', function(){
-																		trivia.radius(id);
+																		trivia.radius(id, [0,109]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "easy3" : $('#'+id).on('click', function(){
-																		trivia.member(id);
+																		trivia.member(id, [0,18]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "med3" : $('#'+id).on('click', function(){
-																		trivia.member(id);
+																		trivia.member(id, [0,54]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "hard3" : $('#'+id).on('click', function(){
-																		trivia.radioactive(id);
+																		trivia.radioactive(id, [0,109]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "imp3" : $('#'+id).on('click', function(){
-																		trivia.member(id);
+																		trivia.member(id, [0,109]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "easy4" : $('#'+id).on('click', function(){
-																		trivia.eleneg(id);
+																		trivia.eleneg(id, [0,36]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "med4" : $('#'+id).on('click', function(){
-																		trivia.eleneg(id);
+																		trivia.eleneg(id, [0,109]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "hard4" : $('#'+id).on('click', function(){
-																		trivia.eleaff(id);
+																		trivia.eleaff(id, [0,36]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 				case "imp4" : $('#'+id).on('click', function(){
-																		trivia.eleaff(id);
+																		trivia.eleaff(id, [0,109]);
 																		display.standardSelClick(id);
 																		}).addClass('sel-hover'); break;
 			}
@@ -381,9 +381,9 @@ var display = {
 }
 
 var trivia = {
-	symbol: function(id) {
+	symbol: function(id, range) {
 		//randomly get four elements
-		var arr = this.getUniqueElem(4);
+		var arr = this.getUniqueElem(4, range);
 
 		//randomly choose a correct answer
 		correctIndex = tools.getRandom(4);
@@ -409,9 +409,9 @@ var trivia = {
 
 		display.attachClicks(id);
 	},
-	number: function(id) {
+	number: function(id, range) {
 		//randomly get four elements
-		var arr = this.getUniqueElem(4);
+		var arr = this.getUniqueElem(4, range);
 
 		//randomly choose a correct answer
 		correctIndex = tools.getRandom(4);
@@ -437,9 +437,9 @@ var trivia = {
 
 		display.attachClicks(id);
 	},
-	radius: function(id) {
+	radius: function(id, range) {
 		//randomly get four elements
-		var arr = this.getUniqueKey(4, "radius");
+		var arr = this.getUniqueKey(4, "radius", range);
 
 		//assign correct
 		correctIndex = tools.getMaxAttrIndex(arr, "radius");
@@ -465,9 +465,9 @@ var trivia = {
 
 		display.attachClicks(id);
 	},
-	eleneg: function(id) {
+	eleneg: function(id, range) {
 		//randomly get four elements
-		var arr = this.getUniqueKey(4, "eleneg");
+		var arr = this.getUniqueKey(4, "eleneg", range);
 
 		//assign correct
 		correctIndex = tools.getMaxAttrIndex(arr, "eleneg");
@@ -493,9 +493,9 @@ var trivia = {
 
 		display.attachClicks(id);
 	},
-	eleaff: function(id) {
+	eleaff: function(id, range) {
 		//randomly get four elements
-		var arr = this.getUniqueKey(4, "eleaff");
+		var arr = this.getUniqueKey(4, "eleaff", range);
 
 		//assign correct
 		correctIndex = tools.getMaxAttrIndex(arr, "eleaff");
@@ -521,9 +521,9 @@ var trivia = {
 
 		display.attachClicks(id);
 	},
-	member: function(id) {
+	member: function(id, range) {
 		//randomly get four elements
-		var arr = this.getUniqueKey(4, "member");
+		var arr = this.getUniqueKey(4, "member", range);
 
 		//randomly choose a correct answer
 		correctIndex = tools.getRandom(4);
@@ -551,9 +551,9 @@ var trivia = {
 
 		display.attachClicks(id);
 	},
-	radioactive: function(id) {
+	radioactive: function(id, range) {
 		//randomly get four elements
-		var arr = this.getUniqueBool(4, "radioactive");
+		var arr = this.getUniqueBool(4, "radioactive", range);
 		
 		var selRow1 = $('<div>').addClass('row').attr('id', 'answer_top_row');
 		var selRow2 = $('<div>').addClass('row').attr('id', 'answer_bot_row');
@@ -576,26 +576,33 @@ var trivia = {
 
 		display.attachClicks(id);
 	},
-	getUniqueElem: function(num) {
+	getUniqueElem: function(num, range) {
+		//get subset of elements
+		var subSet = trivia.getElementSubSet(range);
+		console.log(subSet);
 		var arr = [];
+
 		for (var i = 0; i < num; i++) {
-			var rand = tools.getRandom(elements.length);
-			if (arr.indexOf(elements[rand]) === -1) {
-				arr.push(elements[rand]);
+			var rand = tools.getRandom(subSet.length);
+			if (arr.indexOf(subSet[rand]) === -1) {
+				arr.push(subSet[rand]);
 			}
 			else {i--;}
 		}
 		return arr;
 	},
-	getUniqueKey: function(num, key) {
+	getUniqueKey: function(num, key, range) {
+		var subSet = trivia.getElementSubSet(range);
+		console.log(subSet);
 		var arr = [];
 		var arrKey = [];
+
 		for (var i = 0; i < num; i++) {
-			var rand = tools.getRandom(elements.length);
-			if (arr.indexOf(elements[rand]) === -1 && elements[rand][key] != null) {
-				if (arrKey.indexOf(elements[rand][key]) === -1) {
-					arr.push(elements[rand]);
-					arrKey.push(elements[rand][key]);
+			var rand = tools.getRandom(subSet.length);
+			if (arr.indexOf(subSet[rand]) === -1 && subSet[rand][key] != null) {
+				if (arrKey.indexOf(subSet[rand][key]) === -1) {
+					arr.push(subSet[rand]);
+					arrKey.push(subSet[rand][key]);
 				}
 				else {i--;}
 			}
@@ -603,28 +610,38 @@ var trivia = {
 		}
 		return arr;
 	},
-	getUniqueBool: function(num, key) {
+	getUniqueBool: function(num, key, range) {
+		var subSet = trivia.getElementSubSet(range);
+		console.log(subSet);
 		var arr = [];
 
 		//get a key of true
 		var gotKey = false;
 		while (!gotKey) {
-			var rand = tools.getRandom(elements.length);
-			if (elements[rand][key]) {
-				arr.push(elements[rand]);
+			var rand = tools.getRandom(subSet.length);
+			if (subSet[rand][key]) {
+				arr.push(subSet[rand]);
 				gotKey = true;
 			}
 		}
 
 		for (var i = 1; i < num; i++) {
-			var rand = tools.getRandom(elements.length);
-			if (arr.indexOf(elements[rand]) === -1 && !elements[rand][key]) {
-					arr.push(elements[rand]);
+			var rand = tools.getRandom(subSet.length);
+			if (arr.indexOf(subSet[rand]) === -1 && !subSet[rand][key]) {
+					arr.push(subSet[rand]);
 			}
 			else {i--;}
 		}
 
 		return tools.shuffle(arr);
+	},
+	getElementSubSet: function(range) {
+		var arr = [];
+		//push subset of elements based on game mode
+		for (var i = range[0]; i < range[1]; i++) {
+			arr.push(elements[i]);
+		}
+		return arr;
 	},
 	questions: ["symbol", "number", "radius", "radioactive", "eleneg", "eleaff", "member"]
 }
