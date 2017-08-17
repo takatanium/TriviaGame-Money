@@ -1,11 +1,14 @@
 $(document).ready(function(){
 
+	// store.categories();
 	display.categories();
 	display.promptQuestion();
+	
 });
 
 var game = {
 	reset: function() {
+		$('#cat-container').empty();
 		$('#trivia').attr('correct', "0");
 		$('#trivia').attr('wrong', "0");
 		$('#trivia').attr('num', "0");
@@ -13,7 +16,10 @@ var game = {
 	incCorrect: function(id) {
 		var correct = parseInt($('#trivia').attr("correct"));
 		correct++;
-		$('#trivia').attr('correct', correct);
+		$('#trivia').attr('correct', correct).css('background-color', '#46D301');
+		var span = $('<span>').addClass('info-correct').html("You got it CORRECT!!");
+		$('#info').html(span).css('border', 'solid #46D301 2px');
+
 
 		//increment money
 		var money = parseInt($('#money').attr('amount')) + parseInt($('#'+id).attr('amount'));
@@ -26,9 +32,14 @@ var game = {
 		var wrong = parseInt($('#trivia').attr("wrong"));
 		if (num !== "-1") {
 			wrong++;
+			var span = $('<span>').addClass('info-wrong').html("Sorry you're WRONG!!");
+			$('#info').html(span).css('border', 'solid #D30000 2px');
+			$('#trivia').css('background-color', '#D30000');
+		}
+		else {
+			$('#info').html("Too slow -- ran out of TIME!!");
 		}
 		$('#trivia').attr("wrong", wrong);
-
 		//increment num
 		game.incNum();
 	},
@@ -50,9 +61,6 @@ var timer = {
 			count++;
 			$('#info').attr('count', count);
 
-			console.log($('#info').attr('intervalId'));
-			console.log(currentPage + ": " + $('#info').attr('count'));
-
 			if (currentPage === "question") {
 				timer.display(sec-count);
 
@@ -70,7 +78,6 @@ var timer = {
 			}
 			else {
 				if (count >= sec) {
-					console.log("Here");
 					timer.stop();
 					//check if grid is done
 					$('#trivia').attr('num') === "16" ? display.stats() : display.promptQuestion();
@@ -79,7 +86,6 @@ var timer = {
 		}, 1500));
 	},
 	stop: function() {
-		console.log($('#info').attr('intervalId'));
 		clearInterval($('#info').attr('intervalId'));
 	},
 	display: function(time) {
@@ -96,6 +102,10 @@ var timer = {
 }
 
 var display = {
+	resetColors: function() {
+		$('#trivia').css('background-color', 'lightgrey');
+		$('#info').css('border', 'solid grey 2px');
+	},
 	promptQuestion: function() {
 		timer.display(0); //clear timer
 		//rebuild choices
@@ -113,6 +123,39 @@ var display = {
 		$('#answer_container').append(selRow2);
 
 		$('#trivia').html("Select a Category").css('line-height', '76px');
+
+		display.resetColors();
+	},
+	promptReset: function(currentLoc) {
+		var selRow1 = $('<div>').addClass('row').attr('id', 'answer_top_row');
+		selRow1.addClass('reset-box sel-hover');
+		var span1 = $('<span>').addClass('reset-span').text("Play Again");
+		selRow1.html(span1);
+		$('#answer_container').html(selRow1);
+
+		//attach click
+		selRow1.on('click', function() {
+			game.reset();
+			display.categories();
+			display.promptQuestion();
+		});
+
+		if (currentLoc === "trivia") {
+			var selRow2 = $('<div>').addClass('row').attr('id', 'answer_bot_row');
+			selRow2.addClass('reset-box sel-hover').attr('id', 'cash_in');
+			var span2 = $('<span>').addClass('reset-span').text("Cash In");
+			selRow2.html(span2);
+			$('#answer_container').append(selRow2);
+
+			//attach click
+			selRow2.on('click', function() {
+				game.reset();
+				store.categories();
+				display.promptReset("store");
+				$('#trivia').html("Play again to earn more $$");
+				$('#info').html("Click on card above to spend your $$");
+			});
+		}
 	},
 	answer: function(id, correct) {
 		timer.answer(3);
@@ -138,6 +181,8 @@ var display = {
 		$('#trivia').html("<p>Correct: " + percentCorrect + "%</p>");
 		$('#trivia').append("<p>Wrong: " + percentWrong + "%</p>");
 		$('#trivia').append("<p>Unanswered: " + (100-percentAnswered) + "%</p>");
+
+		display.promptReset("trivia");
 	},
 	attachClicks: function(id) {
 		$('#choice1').on('click', function() {
@@ -241,7 +286,7 @@ var display = {
 	},
 	categories: function() { //builds the entirety of categories
 		//build out category titles
-		$('#cat_container').append(this.genCatRow('cat'));
+		$('#cat_container').html(this.genCatRow('cat'));
 		$('#cat_container').append(this.genCatRow('easy'));
 		$('#cat_container').append(this.genCatRow('med'));
 		$('#cat_container').append(this.genCatRow('hard'));
@@ -251,16 +296,15 @@ var display = {
 		$('.sel-box').each(function() {
 			display.bindSelClicks(this.id);
 		});
-
 	},
 	genCatRow: function(whichRow) {
 		var label = [];
 		switch(whichRow) {
 	    case "cat":
-        label = ["Representation", "Atomic Size", "Element Type", "Electronic"];
+	    	label = ["Representation", "Atomic Size", "Element Type", "Electronic"];
         break;
 	    case "easy":
-	      label = ["100", "100", "100", "100"];
+	    	label = ["100", "100", "100", "100"];
         break;
 	    case "med":
 	      label = ["200", "200", "200", "200"];
@@ -373,6 +417,7 @@ var display = {
 		$('#'+id).css('border', 'solid #FAFAD2 4px');
 		display.unbindSelClicks();	
 		timer.start(5, "question", id);
+		display.resetColors();
 	},
 	unbindChoiceClicks: function() {
 		$('.ans-box').off('click'); //turns clicks off
@@ -405,7 +450,8 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element has the symbol " + arr[correctIndex].symbol + "?").css('line-height', '76px');
+		$('#trivia').html("Which element has the symbol " + arr[correctIndex].symbol + "?");
+		$('#trivia').css('line-height', '76px');
 
 		display.attachClicks(id);
 	},
@@ -433,7 +479,8 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element has the atomic number " + arr[correctIndex].number + "?").css('line-height', '38px');
+		$('#trivia').html("Which element has the<br>atomic number " + arr[correctIndex].number + "?");
+		$('#trivia').css('line-height', '38px');
 
 		display.attachClicks(id);
 	},
@@ -461,7 +508,8 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element has the largest atomic radius?").css('line-height', '38px');
+		$('#trivia').html("Which element has the<br>largest atomic radius?");
+		$('#trivia').css('line-height', '38px');
 
 		display.attachClicks(id);
 	},
@@ -489,7 +537,8 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element has the greatest electronegativity?").css('line-height', '38px');
+		$('#trivia').html("Which element has the greatest electronegativity?");
+		$('#trivia').css('line-height', '38px');
 
 		display.attachClicks(id);
 	},
@@ -517,7 +566,8 @@ var trivia = {
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
 
-		$('#trivia').html("Which element has the greatest electron affinity?").css('line-height', '38px');
+		$('#trivia').html("Which element has the greatest electron affinity?");
+		$('#trivia').css('line-height', '38px');
 
 		display.attachClicks(id);
 	},
@@ -547,7 +597,8 @@ var trivia = {
 
 		var plurality;
 		arr[correctIndex].member === "noble gas" ? plurality = "es" : plurality = "s"; 
-		$('#trivia').html("Which element is a member of the " + arr[correctIndex].member + plurality + '?').css('line-height', '38px');
+		$('#trivia').html("Which element is a member of the " + arr[correctIndex].member + plurality + '?');
+		$('#trivia').css('line-height', '38px');
 
 		display.attachClicks(id);
 	},
@@ -579,7 +630,6 @@ var trivia = {
 	getUniqueElem: function(num, range) {
 		//get subset of elements
 		var subSet = trivia.getElementSubSet(range);
-		console.log(subSet);
 		var arr = [];
 
 		for (var i = 0; i < num; i++) {
@@ -593,7 +643,6 @@ var trivia = {
 	},
 	getUniqueKey: function(num, key, range) {
 		var subSet = trivia.getElementSubSet(range);
-		console.log(subSet);
 		var arr = [];
 		var arrKey = [];
 
@@ -612,7 +661,6 @@ var trivia = {
 	},
 	getUniqueBool: function(num, key, range) {
 		var subSet = trivia.getElementSubSet(range);
-		console.log(subSet);
 		var arr = [];
 
 		//get a key of true
