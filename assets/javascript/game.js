@@ -2,7 +2,11 @@ $(document).ready(function(){
 
 	display.categories();
 	display.promptQuestion();
-	
+	$('#got-btn').on('click', function() {
+			$('.overlay').css('visibility', 'hidden');
+			$('.overlay').empty();
+			$('#money_container').css('visibility', 'visible');
+	});
 });
 
 var game = {

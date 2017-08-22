@@ -25,6 +25,9 @@ h2 {
   font-size: 18px;
 }
 
+h3 {
+  font-size: 30px;
+}
 p {
   font-size: 18px;
   height: 20px;
@@ -53,6 +56,24 @@ button {
   left: 0;
   background-color: lightgrey;
   border: solid grey 2px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gif {
+  height: 270px;
+  width: 480px;
+  margin: auto;
+}
+
+#def {
+  margin-bottom: 20px;
+}
+
+#got-btn {
+  margin-top: 0;
 }
 
 .row {
@@ -92,6 +113,7 @@ button {
 
 #money_container {
   padding: 0 10px 0 0;
+  visibility: hidden;
 }
 
 .money-box {

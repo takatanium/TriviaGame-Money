@@ -1,5 +1,6 @@
 var storeLog = [
-	{cat: ["??","Grignard",false,"https://en.wikipedia.org/wiki/Grignard_reaction"],
+	{cat: ["??","Grignard",false,
+				 "https://en.wikipedia.org/wiki/Grignard_reaction"],
 	 easy: ["$400","H", false],
 	 med: ["$800","C", false],
 	 hard: ["$1200","Br", false],
@@ -21,6 +22,10 @@ var storeLog = [
 	 imp: ["$2000","Fe/Al", false]},
 ];
 
+var gifs = ["https://media.giphy.com/media/3o6gE6VcDIuwebfUje/giphy.gif",
+		        "https://media.giphy.com/media/yE72eDy7lj3JS/giphy.gif",
+		        "https://media.giphy.com/media/qCj1NK1rxtnna/giphy.gif",
+		        "https://media.giphy.com/media/122NnR1rRSq1nW/giphy.gif"]
 
 var store = {
 	categories: function() { //builds the entirety of categories
@@ -104,9 +109,25 @@ var store = {
 						$('#cat'+column).html('<a href="'+ storeLog[column-1].cat[3] +'" target="_blank">'+ 
 																	 storeLog[column-1].cat[1] +'</a>');
 						storeLog[column-1].cat[2] = true;
+						store.celebrateComplete();
 					}
 				}
 			});
 		}
 	},
+	celebrateComplete: function() {
+		var gif = $('<img>').addClass('gif');
+		gif.attr('src', gifs[0]);
+		gifs.splice(0, 1);
+
+		var btn = $('<button>').attr('id', 'got-btn').text("GOT IT!!");
+
+		$('.overlay').html(gif);
+		$('.overlay').append(btn);
+		$('.overlay').css('visibility', 'visible');
+
+		$('#got-btn').on('click', function() {
+			$('.overlay').css('visibility', 'hidden');
+		});
+	}
 }
