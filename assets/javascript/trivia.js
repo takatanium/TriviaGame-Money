@@ -3,72 +3,72 @@ var trivia = {
 	symbol: function(id, range) {
 		var arr = this.getUniqueElem(4, range);
 		correctIndex = tools.getRandom(4);
-		display.makeBoxes(arr, "symbol", correctIndex);
+		display.genBoxes(arr, "symbol", correctIndex);
 
 		$('#trivia').html("Which element has the symbol " + arr[correctIndex].symbol + "?");
 		$('#trivia').css('line-height', '76px');
 
-		display.attachClicks(id);
+		clicks.attachChoice(id);
 	},
 	number: function(id, range) {
 		var arr = this.getUniqueElem(4, range);
 		correctIndex = tools.getRandom(4);
-		display.makeBoxes(arr, "number", correctIndex);
+		display.genBoxes(arr, "number", correctIndex);
 
 		$('#trivia').html("Which element has the<br>atomic number " + arr[correctIndex].number + "?");
 		$('#trivia').css('line-height', '38px');
 
-		display.attachClicks(id);
+		clicks.attachChoice(id);
 	},
 	radius: function(id, range) {
 		var arr = this.getUniqueKey(4, "radius", range);
 		correctIndex = tools.getMaxAttrIndex(arr, "radius");
-		display.makeBoxes(arr, "radius", correctIndex);
+		display.genBoxes(arr, "radius", correctIndex);
 
 		$('#trivia').html("Which element has the<br>largest atomic radius?");
 		$('#trivia').css('line-height', '38px');
 
-		display.attachClicks(id);
+		clicks.attachChoice(id);
 	},
 	eleneg: function(id, range) {
 		var arr = this.getUniqueKey(4, "eleneg", range);
 		correctIndex = tools.getMaxAttrIndex(arr, "eleneg");
-		display.makeBoxes(arr, "eleneg", correctIndex);
+		display.genBoxes(arr, "eleneg", correctIndex);
 
 		$('#trivia').html("Which element has the greatest electronegativity?");
 		$('#trivia').css('line-height', '38px');
 
-		display.attachClicks(id);
+		clicks.attachChoice(id);
 	},
 	eleaff: function(id, range) {
 		var arr = this.getUniqueKey(4, "eleaff", range);
 		correctIndex = tools.getMaxAttrIndex(arr, "eleaff");
-		display.makeBoxes(arr, "eleaff", correctIndex);
+		display.genBoxes(arr, "eleaff", correctIndex);
 
 		$('#trivia').html("Which element has the greatest electron affinity?");
 		$('#trivia').css('line-height', '38px');
 
-		display.attachClicks(id);
+		clicks.attachChoice(id);
 	},
 	member: function(id, range) {
 		var arr = this.getUniqueKey(4, "member", range);
 		correctIndex = tools.getRandom(4);
-		display.makeBoxes(arr, "member", correctIndex);
+		display.genBoxes(arr, "member", correctIndex);
 
 		var plurality;
 		arr[correctIndex].member === "noble gas" ? plurality = "es" : plurality = "s"; 
 		$('#trivia').html("Which element is a member of the " + arr[correctIndex].member + plurality + '?');
 		$('#trivia').css('line-height', '38px');
 
-		display.attachClicks(id);
+		clicks.attachChoice(id);
 	},
 	radioactive: function(id, range) {
 		var arr = this.getUniqueBool(4, "radioactive", range);
-		display.makeBoxes(arr, "radioactive", 0);
+		display.genBoxes(arr, "radioactive", 0);
 
 		$('#trivia').html("Which element is radioactive?").css('line-height', '76px');
 
-		display.attachClicks(id);
+		clicks.attachChoice(id);
 	},
 	getUniqueElem: function(num, range) {
 		//get subset of elements

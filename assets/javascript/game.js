@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-	// store.categories();
 	display.categories();
 	display.promptQuestion();
 	
@@ -19,7 +18,6 @@ var game = {
 		$('#trivia').attr('correct', correct).css('background-color', '#46D301');
 		var span = $('<span>').addClass('info-correct').html("You got it CORRECT!!");
 		$('#info').html(span).css('border', 'solid #46D301 2px');
-
 
 		//increment money
 		var money = parseInt($('#money').attr('amount')) + parseInt($('#'+id).attr('amount'));
@@ -69,10 +67,10 @@ var timer = {
 
 					display.answer(id, "-1");
 					display.markCatSel(id,"-1");
-					display.unbindChoiceClicks();
+					clicks.unbindChoice();
 					//bind the clicks
 					$('.sel-box').each(function() {
-						display.bindSelClicks(this.id);
+						clicks.bindSel(this.id);
 					});
 				}
 			}
@@ -184,84 +182,6 @@ var display = {
 
 		display.promptReset("trivia");
 	},
-	attachClicks: function(id) {
-		$('#choice1').on('click', function() {
-			display.answer(id, $('#choice1').attr('isAnswer'));
-			if ($('#choice1').attr('isAnswer') === "0") {
-				$('#choice1').css('border', 'solid #D30000 4px');
-				display.markCatSel(id,"0");
-			} 
-			else if ($('#choice1').attr('isAnswer') === "1") {
-				display.markCatSel(id,"1");
-			}
-			else {
-				display.markCatSel(id,"-1");
-			}
-			//bind the clicks
-			$('.sel-box').each(function() {
-				display.bindSelClicks(this.id);
-			});
-			//unbind choice clicks
-			display.unbindChoiceClicks();
-		});
-		$('#choice2').on('click', function() {
-			display.answer(id, $('#choice2').attr('isAnswer'));
-			if ($('#choice2').attr('isAnswer') === "0") {
-				$('#choice2').css('border', 'solid #D30000 4px');
-				display.markCatSel(id,"0");
-			}
-			else if ($('#choice2').attr('isAnswer') === "1") {
-				display.markCatSel(id,"1");
-			}
-			else {
-				display.markCatSel(id,"-1");
-			}
-			//bind the clicks
-			$('.sel-box').each(function() {
-				display.bindSelClicks(this.id);
-			});
-			//unbind choice clicks
-			display.unbindChoiceClicks();
-		});
-		$('#choice3').on('click', function() {
-			display.answer(id, $('#choice3').attr('isAnswer'));
-			if ($('#choice3').attr('isAnswer') === "0") {
-				$('#choice3').css('border', 'solid #D30000 4px');
-				display.markCatSel(id,"0");
-			}
-			else if ($('#choice3').attr('isAnswer') === "1") {
-				display.markCatSel(id,"1");
-			}
-			else {
-				display.markCatSel(id,"-1");
-			}
-			//bind the clicks
-			$('.sel-box').each(function() {
-				display.bindSelClicks(this.id);
-			});
-			//unbind choice clicks
-			display.unbindChoiceClicks();
-		});
-		$('#choice4').on('click', function() {
-			display.answer(id, $('#choice4').attr('isAnswer'));
-			if ($('#choice4').attr('isAnswer') === "0") {
-				$('#choice4').css('border', 'solid #D30000 4px');
-				display.markCatSel(id,"0");
-			}
-			else if ($('#choice4').attr('isAnswer') === "1") {
-				display.markCatSel(id,"1");
-			}
-			else {
-				display.markCatSel(id,"-1");
-			}
-			//bind the cat sel clicks
-			$('.sel-box').each(function() {
-				display.bindSelClicks(this.id);
-			});
-			//unbind choice clicks
-			display.unbindChoiceClicks();
-		});
-	},
 	markCatSel: function(id, status) {
 		var text, color, img;
 		if (status === "1") {
@@ -294,7 +214,7 @@ var display = {
 
 		//bind the clicks
 		$('.sel-box').each(function() {
-			display.bindSelClicks(this.id);
+			clicks.bindSel(this.id);
 		});
 	},
 	genCatRow: function(whichRow) {
@@ -337,7 +257,7 @@ var display = {
 		}
 		return row;
 	},
-	makeBoxes: function(arr, key, correctIndex) {
+	genBoxes: function(arr, key, correctIndex) {
 		var selRow1 = $('<div>').addClass('row').attr('id', 'answer_top_row');;
 		var selRow2 = $('<div>').addClass('row').attr('id', 'answer_bot_row');;
 
@@ -364,94 +284,5 @@ var display = {
 
 		$('#answer_container').html(selRow1);
 		$('#answer_container').append(selRow2);
-
-		$('#answer_container').html(selRow1);
-		$('#answer_container').append(selRow2);
-	},
-	bindSelClicks: function(id) {
-		if ($('#'+id).attr('clicked') === "false") {
-			switch (id) {
-				case "easy1" : $('#'+id).on('click', function(){
-																		trivia.symbol(id, [0,18]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "med1" : $('#'+id).on('click', function(){
-																		trivia.symbol(id, [18,109]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "hard1" : $('#'+id).on('click', function(){
-																		trivia.number(id, [0,18]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "imp1" : $('#'+id).on('click', function(){
-																		trivia.number(id, [18,109]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "easy2" : $('#'+id).on('click', function(){
-																		trivia.radius(id, [0,10]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "med2" : $('#'+id).on('click', function(){
-																		trivia.radius(id, [10,36]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "hard2" : $('#'+id).on('click', function(){
-																		trivia.radius(id, [0,54]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "imp2" : $('#'+id).on('click', function(){
-																		trivia.radius(id, [0,109]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "easy3" : $('#'+id).on('click', function(){
-																		trivia.member(id, [0,18]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "med3" : $('#'+id).on('click', function(){
-																		trivia.member(id, [0,54]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "hard3" : $('#'+id).on('click', function(){
-																		trivia.radioactive(id, [0,109]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "imp3" : $('#'+id).on('click', function(){
-																		trivia.member(id, [0,109]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "easy4" : $('#'+id).on('click', function(){
-																		trivia.eleneg(id, [0,36]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "med4" : $('#'+id).on('click', function(){
-																		trivia.eleneg(id, [0,109]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "hard4" : $('#'+id).on('click', function(){
-																		trivia.eleaff(id, [0,36]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-				case "imp4" : $('#'+id).on('click', function(){
-																		trivia.eleaff(id, [0,109]);
-																		display.standardSelClick(id);
-																		}).addClass('sel-hover'); break;
-			}
-		}
-	},
-	unbindSelClicks: function() {
-		$('.sel-box').off('click'); //turns clicks off
-		$('.sel-box').removeClass('sel-hover'); //turns off hover
-	},
-	standardSelClick: function(id) {
-		timer.stop();
-		$('#'+id).attr('clicked', 'true');
-		$('#'+id).css('border', 'solid #FAFAD2 4px');
-		display.unbindSelClicks();	
-		timer.start(5, "question", id);
-		display.resetColors();
-	},
-	unbindChoiceClicks: function() {
-		$('.ans-box').off('click'); //turns clicks off
-		$('.ans-box').removeClass('ans-hover'); //removes hover
 	}
 }
