@@ -39,8 +39,20 @@ button {
 
 .container {
   width: 600px;
+  padding: 0px;
+  position: relative;
+}
+
+.overlay {
+  width: 600px;
+  height: 425px;
   margin: auto;
   padding: 0px;
+  position: absolute;
+  top: 55px;
+  left: 0;
+  background-color: lightgrey;
+  border: solid grey 2px;
 }
 
 .row {
