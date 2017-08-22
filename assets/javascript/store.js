@@ -25,7 +25,7 @@ var storeLog = [
 var gifs = ["https://media.giphy.com/media/3o6gE6VcDIuwebfUje/giphy.gif",
 		        "https://media.giphy.com/media/yE72eDy7lj3JS/giphy.gif",
 		        "https://media.giphy.com/media/qCj1NK1rxtnna/giphy.gif",
-		        "https://media.giphy.com/media/122NnR1rRSq1nW/giphy.gif"]
+		        "https://media.giphy.com/media/122NnR1rRSq1nW/giphy.gif"];
 
 var store = {
 	categories: function() { //builds the entirety of categories
