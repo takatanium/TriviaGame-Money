@@ -67,7 +67,7 @@ var timer = {
 				timer.display(sec-count);
 
 				if (count >= sec) {
-					timer.answer(3);
+					timer.answer(2);
 
 					display.answer(id, "-1");
 					display.markCatSel(id,"-1");
@@ -160,7 +160,7 @@ var display = {
 		}
 	},
 	answer: function(id, correct) {
-		timer.answer(3);
+		timer.answer(2);
 
 		correct === "1" ? game.incCorrect(id) : game.incWrong(id, correct);
 
